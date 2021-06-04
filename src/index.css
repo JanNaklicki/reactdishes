@@ -13,6 +13,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #3f3f3f;
+  /* background-color: #3f3f3f; */
+  background-image: radial-gradient(rgb(221, 223, 255), rgb(77, 133, 119));
 }
 

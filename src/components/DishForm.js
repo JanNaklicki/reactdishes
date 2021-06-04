@@ -28,7 +28,8 @@ const reducer = (state, action) => {
   }
 };
 
-// TODO: Create separate component for http requests 
+// TODO: Create separate component for http requests
+
 
 const formReducer = (state, action) => {
   let updatedState = state;
@@ -61,7 +62,7 @@ const formReducer = (state, action) => {
 const DishFrom = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [formState, dispatchForm] = useReducer(formReducer, initialFromState);
-
+  const [errorMessage, setErrorMessage] = useState("");
   const typeOfFoodHandler = (event) => {
     dispatch({ type: event.target.value });
   };
@@ -88,19 +89,19 @@ const DishFrom = () => {
         no_of_slices: +formState.noOfSlices,
       });
     } else if (state.typeSelected === 2) {
-      console.log(formState.pereparationTime)
+      console.log(formState.pereparationTime);
       raw = JSON.stringify({
         name: formState.name,
         preparation_time: formState.pereparationTime,
         type: "soup",
-        spiciness_scale: +formState.spiciness
+        spiciness_scale: +formState.spiciness,
       });
     } else if (state.typeSelected === 3) {
       raw = JSON.stringify({
         name: formState.name,
         preparation_time: formState.pereparationTime,
         type: "sandwich",
-        slices_of_bread: +formState.slicesOfBread
+        slices_of_bread: +formState.slicesOfBread,
       });
     } else return;
 
@@ -114,8 +115,7 @@ const DishFrom = () => {
     console.log(requestOptions);
     fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+      .then((result) => console.log(result));
   };
 
   return (
@@ -141,20 +141,30 @@ const DishFrom = () => {
                 <Input
                   label="Number of slices"
                   onChange={dataHandler}
-                  input={{ id: "noOfSlices", type: "number", step: "1", min: "1"}}
+                  input={{
+                    id: "noOfSlices",
+                    type: "number",
+                    step: "1",
+                    min: "1",
+                  }}
                 />
                 <Input
                   label="Diameter (cm)"
                   placeholder="30"
                   onChange={dataHandler}
-                  input={{ id: "diameter", type: "number", step: "0.1", min: "0"}}
+                  input={{
+                    id: "diameter",
+                    type: "number",
+                    step: "0.1",
+                    min: "0",
+                  }}
                 />
               </Fragment>
             )
           }
           {
             // Soup
-            state.typeSelected === 2 && <SpicinessBar onChange={dataHandler}/>
+            state.typeSelected === 2 && <SpicinessBar onChange={dataHandler} />
           }
 
           {
@@ -168,13 +178,14 @@ const DishFrom = () => {
                   type: "number",
                   min: "0",
                   step: "1",
-                  placeholder: 1
+                  placeholder: 1,
                 }}
               />
             )
           }
         </div>
 
+        <div>{errorMessage}</div>
         <button className={classes.button} type="submit">
           Submit
         </button>
