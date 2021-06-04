@@ -11,7 +11,7 @@ const Select = (props) => {
   return (
     <Fragment>
       <div className={classes.input}>
-        <label>{props.label}:</label>
+        <label>{props.label}</label>
         <select onChange={props.onChange}>{options}</select>
       </div>
     </Fragment>

@@ -97,7 +97,7 @@ const DishFrom = () => {
             state.typeSelected === "pizza" && (
               <Fragment>
                 <Input
-                  label="Number of slices"
+                  label="Number of slices 🍕"
                   onChange={dataHandler}
                   input={{
                     id: "noOfSlices",
@@ -107,7 +107,7 @@ const DishFrom = () => {
                   }}
                 />
                 <Input
-                  label="Diameter (cm)"
+                  label="Diameter (cm) 📏"
                   placeholder="30"
                   onChange={dataHandler}
                   input={{
@@ -131,7 +131,7 @@ const DishFrom = () => {
             //Sandwich
             state.typeSelected === "sandwich" && (
               <Input
-                label="Slices of bread "
+                label="Slices of bread 🍞"
                 onChange={dataHandler}
                 input={{
                   id: "slicesOfBread",
