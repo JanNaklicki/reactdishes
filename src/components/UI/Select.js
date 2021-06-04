@@ -1,15 +1,11 @@
 import React, { Fragment } from "react";
-import classes from "./Input.module.css";
-const dishTypes = ["pizza", "soup", "sandwich"];
+import classes from './Input.module.css'
+const dishTypes = ["Pizza", "Soup", "Sandwich"];
 
 const Select = (props) => {
-  console.log(props.label);
+
   const options = dishTypes.map((item) => {
-    return (
-      <Fragment>
-        <option value={item}>{item}</option>
-      </Fragment>
-    );
+    return (<option key={item} value={item}>{item}</option>);
   });
 
   return (

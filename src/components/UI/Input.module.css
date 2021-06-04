@@ -17,3 +17,11 @@
     font: inherit;
     padding-left: 0.5rem;
   }
+
+  .input select {
+    width: 9rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font: inherit;
+    padding-left: 0.5rem;
+  }

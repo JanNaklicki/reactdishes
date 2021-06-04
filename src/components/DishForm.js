@@ -1,73 +1,128 @@
 import Input from "./UI/Input";
 import classes from "./DishFrom.module.css";
 import Card from "./UI/Card";
-import Select from "./UI/Select";
-import React, { useState, Fragment } from "react";
+import React, { useEffect, useReducer, Fragment, useState } from "react";
+import DefaultInputs from "./DefaultInputs";
+import SpicinessBar from "./UI/SpicinessBar";
+
+const initialState = { typeSelected: 1 };
+const initialFromState = {
+  name: "",
+  pereparationTime: 0,
+  dishType: "",
+  diameter: 0,
+  noOfSlices: 0,
+  spiciness: 0,
+  slicesOfBread: 0,
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "Pizza":
+      return { typeSelected: 1 };
+    case "Soup":
+      return { typeSelected: 2 };
+    case "Sandwich":
+      return { typeSelected: 3 };
+    default:
+      return new Error();
+  }
+};
+
+const formReducer = (state, action) => {
+  let updatedState = state;
+  switch (action.type) {
+    case "name":
+      updatedState.name = action.value;
+      return updatedState;
+    case "prep":
+      updatedState.pereparationTime = action.value;
+      return updatedState;
+    case "dishType":
+      updatedState.pereparationTime = action.value;
+      return updatedState;
+    case "diameter":
+      updatedState.pereparationTime = action.value;
+      return updatedState;
+    case "noOfSlices":
+      updatedState.pereparationTime = action.value;
+      return updatedState;
+    case "spiciness":
+      updatedState.pereparationTime = action.value;
+      return updatedState;
+    case "slicesOfBread":
+      updatedState.pereparationTime = action.value;
+      return updatedState;
+    default:
+      return new Error();
+  }
+};
+
 const DishFrom = () => {
-  const [isPizzaChosen, setPizzaChosen] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [formState, dispatchForm] = useReducer(formReducer, initialFromState);
 
   const chosenTypeOfFood = (event) => {
-    const typeChosen = event.target.value;
-    if (typeChosen === "pizza") {
-      setPizzaChosen(true);
-    } else {
-      setPizzaChosen(false);
-    }
+    dispatch({ type: event.target.value });
+  };
+
+  
+  const submitHandler = (event) => {
+    event.preventDefault();
+    console.log(event.target);
+
   };
 
   return (
     <Card>
-      <h2> Dish form</h2>
-      <form className={classes.form}>
+      {/* <h2> Dish form</h2> */}
+      <form className={classes.form} onSubmit={submitHandler}>
         <div>
-          <Input
-            label="Dish name"
-            input={{
-              id: "amount_",
-              type: "text",
+          <DefaultInputs typeOfDish={chosenTypeOfFood}></DefaultInputs>
+          {
+            // Pizza
+            state.typeSelected === 1 && (
+              <Fragment>
+                <Input
+                  label="Number of slices"
+                  onChange={dispatchForm}
+                  input={{ id: "amount_", type: "number", step: "1" }}
+                />
+                <Input
+                  label="Diameter (cm)"
+                  placeholder="30"
+                  onChange={dispatchForm}
+                  input={{ id: "amount_", type: "number", step: "0.1" }}
+                />
+              </Fragment>
+            )
+          }
+          {
+            // Soup
+            state.typeSelected === 2 && <SpicinessBar />
+          }
 
-              placeholder: "Name",
-            }}
-          />
-          <Input
-            label="Preparation time"
-            input={{
-              id: "amount_",
-              type: "time",
-              step: "1",
-            }}
-          />
-          <Select onChange={chosenTypeOfFood} label="Type" />
-          {isPizzaChosen && (
-            <Fragment>
+          {
+            //Sandwich
+            state.typeSelected === 3 && (
               <Input
-                label="Number of slices"
+                label="Slices of bread "
+                onChange={dispatchForm}
                 input={{
                   id: "amount_",
                   type: "number",
+                  min: "0",
                   step: "1",
+                  value: "1",
                 }}
               />
-              <Input
-                label="Diameter (cm)"
-                placeholder="30"
-                input={{
-                  id: "amount_",
-                  type: "number",
-                  step: "0.1",
-                }}
-              />
-            </Fragment>
-          )}
+            )
+          }
         </div>
 
-        <div>
-          {/* TODO: ADD component for dish types (small icons) */}placeholder
-        </div>
+        <button className={classes.button} type="submit">
+          Submit
+        </button>
       </form>
-      <button className={classes.button} type="submit">
-        Submit
-      </button>
     </Card>
   );
 };

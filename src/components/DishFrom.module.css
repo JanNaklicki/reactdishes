@@ -1,14 +1,11 @@
 .form {
   text-align: left;
-  display: flex;
-  flex-direction: row;
   width: 100%;
-  justify-content: space-between;
-  align-items: baseline;
 }
 
 
 .button {
+    
     font: inherit;
     cursor: pointer;
     background-color: #8a2b06;
