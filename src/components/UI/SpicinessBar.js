@@ -6,7 +6,7 @@ const SpicinessBar = (props) => {
     
     <div className={classes.input}>
       <label htmlFor="spiceInput">Spiciness</label>
-      <input required id="spiceInput" type="range" min="0" max="10" step="1"/>
+      <input required id="spiciness" type="range" min="0" max="10" step="1" onChange={props.onChange}/>
     </div>
   );
 };

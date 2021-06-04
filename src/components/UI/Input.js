@@ -3,7 +3,7 @@ const Input = (props) => {
   return (
     <div className={classes.input}>
       <label htmlFor={props.input.id}>{props.label}</label>
-      <input required id={props.input.id} {...props.input} />
+      <input onChange={props.onChange} required id={props.input.id} {...props.input} />
     </div>
   );
 };
