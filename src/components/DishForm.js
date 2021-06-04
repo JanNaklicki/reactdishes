@@ -4,8 +4,9 @@ import Card from "./UI/Card";
 import React, { useReducer, Fragment, useState } from "react";
 import Select from "./UI/Select";
 import SpicinessBar from "./UI/SpicinessBar";
+import Submit from "./Helpers/Submit";
 
-const initialState = { typeSelected: 1 };
+const initialState = { typeSelected: "pizza" };
 const initialFromState = {
   name: "",
   pereparationTime: 0,
@@ -16,20 +17,19 @@ const initialFromState = {
   slicesOfBread: 0,
 };
 const reducer = (state, action) => {
+  console.log(action.type);
+
   switch (action.type) {
     case "Pizza":
-      return { typeSelected: 1 };
+      return { typeSelected: "pizza" };
     case "Soup":
-      return { typeSelected: 2 };
+      return { typeSelected: "soup" };
     case "Sandwich":
-      return { typeSelected: 3 };
+      return { typeSelected: "sandwich" };
     default:
       return new Error();
   }
 };
-
-// TODO: Create separate component for http requests
-
 
 const formReducer = (state, action) => {
   let updatedState = state;
@@ -62,65 +62,23 @@ const formReducer = (state, action) => {
 const DishFrom = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [formState, dispatchForm] = useReducer(formReducer, initialFromState);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [responseMessage, setResponseMessage] = useState(" ");
+
   const typeOfFoodHandler = (event) => {
     dispatch({ type: event.target.value });
   };
 
   const dataHandler = (event) => {
-    // console.log(event.target.id)
     dispatchForm({ type: event.target.id, value: event.target.value });
-    // console.log(formState.diameter)
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    let requestOptions = {};
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    let raw = JSON.stringify({});
-
-    if (state.typeSelected === 1) {
-      raw = JSON.stringify({
-        name: formState.name,
-        preparation_time: formState.pereparationTime,
-        type: "pizza",
-        diameter: +formState.diameter,
-        no_of_slices: +formState.noOfSlices,
-      });
-    } else if (state.typeSelected === 2) {
-      console.log(formState.pereparationTime);
-      raw = JSON.stringify({
-        name: formState.name,
-        preparation_time: formState.pereparationTime,
-        type: "soup",
-        spiciness_scale: +formState.spiciness,
-      });
-    } else if (state.typeSelected === 3) {
-      raw = JSON.stringify({
-        name: formState.name,
-        preparation_time: formState.pereparationTime,
-        type: "sandwich",
-        slices_of_bread: +formState.slicesOfBread,
-      });
-    } else return;
-
-    requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    console.log(requestOptions);
-    fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result));
+    Submit(formState, state, setResponseMessage);
   };
 
   return (
     <Card>
-      {/* <h2> Dish form</h2> */}
       <form className={classes.form} onSubmit={submitHandler}>
         <div>
           <Input
@@ -136,7 +94,7 @@ const DishFrom = () => {
           <Select onChange={typeOfFoodHandler} label="Type of dish" />
           {
             // Pizza
-            state.typeSelected === 1 && (
+            state.typeSelected === "pizza" && (
               <Fragment>
                 <Input
                   label="Number of slices"
@@ -156,7 +114,7 @@ const DishFrom = () => {
                     id: "diameter",
                     type: "number",
                     step: "0.1",
-                    min: "0",
+                    min: "-1",
                   }}
                 />
               </Fragment>
@@ -164,12 +122,14 @@ const DishFrom = () => {
           }
           {
             // Soup
-            state.typeSelected === 2 && <SpicinessBar onChange={dataHandler} />
+            state.typeSelected === "soup" && (
+              <SpicinessBar onChange={dataHandler} />
+            )
           }
 
           {
             //Sandwich
-            state.typeSelected === 3 && (
+            state.typeSelected === "sandwich" && (
               <Input
                 label="Slices of bread "
                 onChange={dataHandler}
@@ -185,7 +145,10 @@ const DishFrom = () => {
           }
         </div>
 
-        <div>{errorMessage}</div>
+        {responseMessage === true && <div className={classes.done}>Done!</div>}
+        {!responseMessage === true && (
+          <div className={classes.error}>Something went wrong</div>
+        )}
         <button className={classes.button} type="submit">
           Submit
         </button>
