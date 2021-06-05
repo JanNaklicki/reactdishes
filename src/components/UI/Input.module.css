@@ -11,12 +11,12 @@
 
 .input input {
   width: 9rem;
-  
+
   border-radius: 5px;
   border: 2px solid #ccc;
   font: inherit;
   padding-left: 0.5rem;
-  transition: ease-in-out, width .35s ease-in-out;
+  transition: ease-in-out, width 0.35s ease-in-out;
 }
 
 .input input:focus {
@@ -36,11 +36,9 @@
   font: inherit;
   padding-left: 0.5rem;
 }
-.input select:hover
-{
+.input select:hover {
   border: 2px solid #b33909;
 }
-.input option:hover
-{
+.input option:hover {
   background-color: #b33909;
 }

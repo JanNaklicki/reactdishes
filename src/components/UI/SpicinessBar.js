@@ -8,8 +8,6 @@ const SpicinessBar = (props) => {
   };
 
   return (
-    
-
     <div className={classes.input}>
       <label htmlFor="spiceInput">Spiciness: {rangeValue} 🌶️</label>
       <div style={{ display: "flex" }}>
@@ -23,8 +21,6 @@ const SpicinessBar = (props) => {
           min="1"
           max="10"
           step="1"
-         
-          
         />
       </div>
     </div>

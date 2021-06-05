@@ -33,7 +33,6 @@ const reducer = (state, action) => {
 
 const formReducer = (state, action) => {
   let updatedState = state;
-  console.log(action.type);
   switch (action.type) {
     case "name":
       updatedState.name = action.value;

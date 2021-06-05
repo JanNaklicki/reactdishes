@@ -1,19 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300');
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300");
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Source Sans Pro', sans-serif;
-	color: black;
-	font-weight: 300;
+  font-family: "Source Sans Pro", sans-serif;
+  color: black;
+  font-weight: 300;
   font-size: 1.5rem;
 }
 
 body {
   margin: 0;
   /* background-color: #3f3f3f; */
-  background-image: radial-gradient(rgb(221, 223, 255), rgb(77, 133, 119));
+  background-image: radial-gradient(rgb(255, 232, 221), rgb(133, 84, 77));
 }
-

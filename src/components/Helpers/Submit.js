@@ -1,10 +1,12 @@
 const Submit = (formState, state, setResponseMessage) => {
-  //   console.log(props.formState)
+ 
+  // common data atributes
   let raw = {
     name: formState.name,
     preparation_time: formState.pereparationTime,
     type: state.typeSelected,
   };
+
   if (state.typeSelected === "pizza") {
     raw = JSON.stringify({
       ...raw,
@@ -23,6 +25,8 @@ const Submit = (formState, state, setResponseMessage) => {
     });
   } else return;
 
+
+  // Setting headers
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   let requestOptions = {

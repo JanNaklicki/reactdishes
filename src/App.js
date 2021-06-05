@@ -1,14 +1,11 @@
 import "./App.css";
 import DishFrom from "./components/DishForm";
 
-
 function App() {
   return (
-    
-      <main>
-        <DishFrom />
-      </main>
-    
+    <main>
+      <DishFrom />
+    </main>
   );
 }
 
